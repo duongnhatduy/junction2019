@@ -1,11 +1,11 @@
-import React, { useState, useEffect } from "react";
-import { getOverview, getSeries } from "../../api";
-import { SavingGoal } from "./SavingGoal";
-import { InputLabel, Select, MenuItem } from "@material-ui/core";
-import { getOverview, getSeries } from "../../api";
+import React, { useState, useEffect } from 'react';
+import { SavingGoal } from './SavingGoal';
+import { InputLabel, Select, MenuItem } from '@material-ui/core';
+import { getOverview, getSeries } from '../../api';
+import { CostList } from './CostList';
 
 export const Overview = () => {
-  const [groupBy, setGroupBy] = useState("1month");
+  const [groupBy, setGroupBy] = useState('1month');
 
   const [overview, setOverview] = useState(null);
   const [series, setSeries] = useState(null);
@@ -19,7 +19,6 @@ export const Overview = () => {
     }
     fetch();
   }, [groupBy]);
-  console.log(series);
   return (
     <>
       <InputLabel id="label">Time range</InputLabel>
@@ -40,6 +39,7 @@ export const Overview = () => {
         income={3000}
         expense={1500}
       />
+      {!!series && <CostList series={series} />}
     </>
   );
 };
