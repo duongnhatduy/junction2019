@@ -13,7 +13,7 @@ export const Overview = () => {
   useEffect(() => {
     async function fetch() {
       const overviewData = await getOverview({ groupBy });
-      const seriesData = await getSeries(groupBy);
+      const seriesData = await getSeries({ groupBy });
       setOverview(overviewData);
       setSeries(seriesData);
     }
@@ -28,8 +28,8 @@ export const Overview = () => {
         <MenuItem value="1year">1 Year</MenuItem>
       </Select>
 
+      {overview && series ? <SavingGoal {...overview} series={series} /> : <div>loading...</div>}
       {!!series && <CostList series={series} />}
-      {overview ? <SavingGoal {...overview} /> : <div>loading...</div>}
     </>
   );
 };

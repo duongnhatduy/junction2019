@@ -1,11 +1,7 @@
 import React from 'react';
-import {
-  List,
-  ListSubheader,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from '@material-ui/core';
+import { List, ListSubheader, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+
+import { aggregateTotalCost } from '../../utils';
 
 export const CostList = ({ series }) => {
   const { fixCost, variableCost } = aggregateTotalCost(series);
@@ -26,26 +22,3 @@ export const CostList = ({ series }) => {
     </List>
   );
 };
-
-function aggregateTotalCost(series) {
-  return series.reduce(
-    ({ fixCost, variableCost }, month) => {
-      // each fixCost item of month
-      Object.keys(month.fixCost).map(type => {
-        if (!fixCost[type]) {
-          fixCost[type] = 0;
-        }
-        return (fixCost[type] += month.fixCost[type]);
-      });
-      Object.keys(month.variableCost).map(type => {
-        if (!variableCost[type]) {
-          variableCost[type] = 0;
-        }
-        return (variableCost[type] += month.variableCost[type]);
-      });
-
-      return { fixCost, variableCost };
-    },
-    { fixCost: {}, variableCost: {} }
-  );
-}
