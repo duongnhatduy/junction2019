@@ -1,12 +1,5 @@
 import React from 'react';
-import {
-  List,
-  ListSubheader,
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  Card
-} from '@material-ui/core';
+import { Box, Container, Card, Grid, Typography } from '@material-ui/core';
 
 export const CostList = ({ series }) => {
   const { fixCost, variableCost } = aggregateTotalCost(series);
@@ -19,14 +12,29 @@ export const CostList = ({ series }) => {
 };
 
 const GroupedList = ({ header, costMap }) => (
-  <List subheader={<ListSubheader>{header}</ListSubheader>}>
-    {Object.entries(costMap).map(([key, value]) => (
-      <ListItem key={key}>
-        <ListItemText id={key} primary={key} />
-        <ListItemIcon>{value}</ListItemIcon>
-      </ListItem>
-    ))}
-  </List>
+  <Container>
+    <Box p={1}>
+      <Typography variant="h5" component="h5">
+        {header}
+      </Typography>
+      {Object.entries(costMap).map(([key, value]) => (
+        <Grid
+          container
+          direction="row"
+          justify="space-between"
+          alignItems="center"
+          key={key}
+        >
+          <Grid item xs={9}>
+            {key}
+          </Grid>
+          <Grid item xs={3}>
+            {value}
+          </Grid>
+        </Grid>
+      ))}
+    </Box>
+  </Container>
 );
 
 function aggregateTotalCost(series) {
