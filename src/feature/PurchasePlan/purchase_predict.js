@@ -13,7 +13,7 @@ export const purchasePredict = (fixCost, variableCost) => {
       if (i >= 0) {
         seri.fixCost.extraCost = sum(Object.values(fixCost));
       }
-      seri.month = (seri.month + 11) % 11
+      seri.month = (seri.month + 11) % 12
       return seri;
     });
   });
