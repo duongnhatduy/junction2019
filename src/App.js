@@ -9,7 +9,7 @@ import { Container } from "@material-ui/core";
 function App() {
   return (
     <Router>
-      <Container>
+      <Container maxWidth="sm">
         {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
         <Switch>

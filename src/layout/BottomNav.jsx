@@ -21,7 +21,6 @@ export const BottomNav = () => {
     <BottomNavigation
       value={location.pathname}
       onChange={(event, newValue) => {
-        console.log(newValue);
         history.push(`/${newValue}`);
       }}
       showLabels
