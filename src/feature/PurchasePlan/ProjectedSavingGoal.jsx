@@ -19,7 +19,7 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
   const expenses = series.map(transaction => {
     const _fixCost = { ...transaction.fixCost };
     delete _fixCost.extraCost;
-    const fixedCost = accumulateCost(transaction.fixCost);
+    const fixedCost = accumulateCost(_fixCost);
 
     const _variableCost = { ...transaction.variableCost };
     delete _variableCost.extraCost;
@@ -49,6 +49,7 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
   console.log(totalExtraCost);
 
   const savings = incomes.map((income, index) => income - expenses[index]);
+  const savings_withoutExtraCost = incomes.map((income, index) => income - expenses[index] - extraCosts[index]);
 
   const option = {
     chart: {
@@ -72,6 +73,7 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
         },
       },
     ],
+    colors: ['#32a852', '#3e98c7', '#f00'],
     plotOptions: {
       bar: {
         horizontal: false,
@@ -97,7 +99,11 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
     },
     {
       name: 'Saving',
-      data: savings,
+      data: savings_withoutExtraCost,
+    },
+    {
+      name: 'Extra cost',
+      data: extraCosts,
     },
   ];
 
@@ -106,10 +112,12 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
       <div style={{ padding: 10 }}>
         <CircularProgressbarWithChildren
           value={progress_withoutExtraCost}
+          text={`-${totalExtraCost}€`}
           styles={buildStyles({
             pathColor: '#f00',
             trailColor: '#eee',
             strokeLinecap: 'butt',
+            textColor: '#f00',
           })}
         >
           {/* Foreground path */}
@@ -121,9 +129,9 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
             })}
           />
         </CircularProgressbarWithChildren>
-
-        <CircularProgressbar strokeWidth={15} value={progress_withExtraCost} text={`${balance_withExtraCost}€`} />
         <div>{`Goal: ${goal}€`}</div>
+
+        {/* <CircularProgressbar strokeWidth={15} value={progress_withExtraCost} text={`${balance_withExtraCost}€`} /> */}
       </div>
       <Chart options={option} series={data} type="bar" height="350" />
     </>
