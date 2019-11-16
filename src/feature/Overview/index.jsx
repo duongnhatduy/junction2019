@@ -33,13 +33,16 @@ export const Overview = () => {
         <MenuItem value="1year">1 Year</MenuItem>
       </Select>
       {!!series && !!overview ? (
-        <>
-          <SavingGoal {...overview} series={series} />{' '}
-          <CostList series={series} />
-        </>
+        <OverviewDumb overview={overview} series={series} />
       ) : (
         <div>loading...</div>
       )}
     </>
   );
 };
+
+export const OverviewDumb = ({ overview, series }) => (
+  <>
+    <SavingGoal {...overview} series={series} /> <CostList series={series} />
+  </>
+);
