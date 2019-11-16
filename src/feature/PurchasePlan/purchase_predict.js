@@ -23,9 +23,7 @@ export const purchasePredict = (fixCost, variableCost) => {
     if (i === 0) {
       seri.variableCost.extraCost = parseFloat(variableCost.down_payment);
     }
-    if (i > currentMonthIndex) {
-      seri.fixCost.extraCost = sum(Object.values(fixCost));
-    }
+    seri.fixCost.extraCost = sum(Object.values(fixCost));
     seriesData.push(seri)
     i++
   }
