@@ -44,11 +44,7 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
   const balance_withExtraCost = totalIncome - totalExpense - totalExtraCost;
   const progress_withExtraCost = (balance_withExtraCost / goal) * 100;
 
-  console.log(progress_withoutExtraCost);
-  console.log(progress_withExtraCost);
-  console.log(totalExtraCost);
-
-  const savings = incomes.map((income, index) => income - expenses[index]);
+  // const savings = incomes.map((income, index) => income - expenses[index]);
   const savings_withoutExtraCost = incomes.map((income, index) => income - expenses[index] - extraCosts[index]);
 
   const option = {
@@ -73,7 +69,7 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
         },
       },
     ],
-    colors: ['#32a852', '#3e98c7', '#f00'],
+    colors: ['#008ffb', '#00e396', '#f00'],
     plotOptions: {
       bar: {
         horizontal: false,

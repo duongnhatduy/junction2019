@@ -23,5 +23,5 @@ export function aggregateTotalCost(series) {
 
 export const sum = arr =>
   arr.reduce((acumm, current) => {
-    return (acumm += parseFloat(current));
+    return (acumm += !isNaN(parseFloat(current)) ? parseFloat(current) : 0);
   }, 0);

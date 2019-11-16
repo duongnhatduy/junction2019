@@ -1,7 +1,7 @@
 export const seriesData = [
   {
     month: 0,
-    income: 2300,
+    income: 2550,
     fixCost: {
       rent: 508,
       carBill: 250,
@@ -35,7 +35,7 @@ export const seriesData = [
   },
   {
     month: 2,
-    income: 2300,
+    income: 2650,
     fixCost: {
       rent: 508,
       carBill: 250,
@@ -52,7 +52,7 @@ export const seriesData = [
   },
   {
     month: 3,
-    income: 2300,
+    income: 2750,
     fixCost: {
       rent: 508,
       carBill: 250,
@@ -86,7 +86,7 @@ export const seriesData = [
   },
   {
     month: 5,
-    income: 2300,
+    income: 2550,
     fixCost: {
       rent: 508,
       carBill: 250,
@@ -103,7 +103,7 @@ export const seriesData = [
   },
   {
     month: 6,
-    income: 2300,
+    income: 2450,
     fixCost: {
       rent: 508,
       carBill: 250,
@@ -137,7 +137,7 @@ export const seriesData = [
   },
   {
     month: 8,
-    income: 2300,
+    income: 2650,
     fixCost: {
       rent: 508,
       carBill: 250,
@@ -171,7 +171,7 @@ export const seriesData = [
   },
   {
     month: 10,
-    income: 2650,
+    income: 2750,
     fixCost: {
       rent: 508,
       carBill: 250,
@@ -188,19 +188,10 @@ export const seriesData = [
   },
   {
     month: 11,
-    income: 2300,
+    income: 0,
     fixCost: {
-      rent: 508,
-      carBill: 250,
-      gas: 80,
-      electric: 50,
-      phoneBill: 20
     },
     variableCost: {
-      groceries: 220,
-      eatingOut: 150,
-      entertainment: 275,
-      utilities: 50
     }
   }
 ];

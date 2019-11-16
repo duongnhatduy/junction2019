@@ -11,6 +11,8 @@ const accumulateCost = costObj => {
   }, 0);
 };
 
+// const MONTH_NAME = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC']
+
 export const SavingGoal = ({ goal, series }) => {
   const months = series.map(transaction => transaction.month + 1);
   const incomes = series.map(transaction => transaction.income);
@@ -45,7 +47,7 @@ export const SavingGoal = ({ goal, series }) => {
           legend: {
             position: 'bottom',
             offsetX: -10,
-            offsetY: 0,
+            offsetY: -10,
           },
         },
       },

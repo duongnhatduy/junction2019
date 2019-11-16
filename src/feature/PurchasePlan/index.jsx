@@ -1,13 +1,21 @@
 import React, { useState, Fragment } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import { Card, Box, Dialog, DialogTitle, DialogContent, DialogActions, Slide } from '@material-ui/core';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import FormControl from '@material-ui/core/FormControl';
-import NativeSelect from '@material-ui/core/NativeSelect';
-import InputBase from '@material-ui/core/InputBase';
-import Button from '@material-ui/core/Button';
-import FormLabel from '@material-ui/core/FormLabel';
+import {
+  Box,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Slide,
+  InputAdornment,
+  Input,
+  InputLabel,
+  FormControl,
+  NativeSelect,
+  InputBase,
+  Button,
+  FormLabel
+} from '@material-ui/core';
 
 import { purchasePredict } from './purchase_predict';
 import { CostList } from '../Overview/CostList';
@@ -77,9 +85,9 @@ export function PurchasePlan() {
   const classes = useStyles();
   const [fixCost, setFixCost] = useState({
     installment: 0,
-    maintenance: 100,
-    insurance: 60,
-    taxes: 75,
+    maintenance: 20,
+    insurance: 25,
+    taxes: 5,
     carwash: 10,
     garage: 10,
     fuel: 150,
@@ -104,6 +112,15 @@ export function PurchasePlan() {
       };
     });
   };
+  const handleFixCostPerYearInputChange = event => {
+    const { name, value } = event.target;
+    setFixCost(prev => {
+      return {
+        ...prev,
+        [name]: value / 12,
+      };
+    });
+  };
   const handleVariableCostInputChange = event => {
     const { name, value } = event.target;
     setVariableCost(prev => {
@@ -119,6 +136,8 @@ export function PurchasePlan() {
     setPlan(newPlan);
     setIsOpen(true);
   };
+  const endInput = <InputAdornment position="end">€/year</InputAdornment>
+  const endInputPerMonth = <InputAdornment position="end">€/month</InputAdornment>
 
   return (
     <div>
@@ -159,7 +178,7 @@ export function PurchasePlan() {
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="installment">Installment</InputLabel>
-                <Input name="installment" onChange={handleFixCostInputChange} />
+                <Input name="installment" onChange={handleFixCostInputChange} endAdornment={endInputPerMonth} />
               </FormControl>
             </FormControl>
 
@@ -169,23 +188,23 @@ export function PurchasePlan() {
               </FormLabel>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="maintenance">Maintenance and repair</InputLabel>
-                <Input defaultValue="100" name="maintenance" onChange={handleFixCostInputChange} />
+                <Input defaultValue="240" name="maintenance" onChange={handleFixCostPerYearInputChange} endAdornment={endInput} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="insurance">Insurance</InputLabel>
-                <Input defaultValue="60" name="insurance" onChange={handleFixCostInputChange} />
+                <Input defaultValue="300" name="insurance" onChange={handleFixCostPerYearInputChange} endAdornment={endInput} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="taxes">Registration and taxes</InputLabel>
-                <Input defaultValue="75" name="taxes" onChange={handleFixCostInputChange} />
+                <Input defaultValue="60" name="taxes" onChange={handleFixCostPerYearInputChange} endAdornment={endInput} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="carwash">Car wash</InputLabel>
-                <Input defaultValue="10" name="carwash" onChange={handleFixCostInputChange} />
+                <Input defaultValue="120" name="carwash" onChange={handleFixCostPerYearInputChange} endAdornment={endInput} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="garage">Garage expense</InputLabel>
-                <Input defaultValue="10" name="garage" onChange={handleFixCostInputChange} />
+                <Input defaultValue="120" name="garage" onChange={handleFixCostPerYearInputChange} endAdornment={endInput} />
               </FormControl>
             </FormControl>
             <FormControl fullWidth component="fieldset" className={classes.formControl}>
@@ -194,7 +213,7 @@ export function PurchasePlan() {
               </FormLabel>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="fuel">Fuel Costs</InputLabel>
-                <Input defaultValue="150" name="fuel" onChange={handleFixCostInputChange} />
+                <Input defaultValue="150" name="fuel" onChange={handleFixCostInputChange} endAdornment={endInputPerMonth} />
               </FormControl>
             </FormControl>
 

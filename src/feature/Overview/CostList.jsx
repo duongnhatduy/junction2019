@@ -51,7 +51,7 @@ export const CostList = ({ series }) => {
 
   return (
     <Card>
-      <GroupedList header="Fix Expense" costMap={fixCost} />
+      <GroupedList header="Fixed Expense" costMap={fixCost} />
       <GroupedList header="Variable Expense" costMap={variableCost} />
     </Card>
   );
