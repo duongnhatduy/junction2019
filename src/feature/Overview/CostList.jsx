@@ -17,6 +17,7 @@ import LocalGroceryStoreOutlinedIcon from '@material-ui/icons/LocalGroceryStoreO
 import FastfoodOutlinedIcon from '@material-ui/icons/FastfoodOutlined';
 import TheatersOutlinedIcon from '@material-ui/icons/TheatersOutlined';
 import WbIncandescentOutlinedIcon from '@material-ui/icons/WbIncandescentOutlined';
+import ReportProblemOutlinedIcon from '@material-ui/icons/ReportProblemOutlined';
 import { aggregateTotalCost } from '../../utils';
 
 const useStyles = makeStyles(theme => ({
@@ -28,7 +29,8 @@ const useStyles = makeStyles(theme => ({
 const NAME_MAP = {
   carBill: 'car bill',
   eatingOut: 'eat out',
-  phoneBill: 'phone bill'
+  phoneBill: 'phone bill',
+  extraCost: 'extra cost'
 };
 
 const ICON_MAP = {
@@ -40,7 +42,8 @@ const ICON_MAP = {
   groceries: <LocalGroceryStoreOutlinedIcon />,
   entertainment: <TheatersOutlinedIcon />,
   phoneBill: <PhoneOutlinedIcon />,
-  utilities: <WbIncandescentOutlinedIcon />
+  utilities: <WbIncandescentOutlinedIcon />,
+  extraCost: <ReportProblemOutlinedIcon color="error" />
 };
 
 export const CostList = ({ series }) => {
@@ -54,12 +57,16 @@ export const CostList = ({ series }) => {
   );
 };
 
-const CategoryName = ({ name }) => (NAME_MAP[name] ? NAME_MAP[name] : name);
+const CategoryName = ({ name, color }) => (
+  <Typography color={color}>
+    {NAME_MAP[name] ? NAME_MAP[name] : name}
+  </Typography>
+);
 const Icon = ({ name }) => (ICON_MAP[name] ? ICON_MAP[name] : null);
-const Category = ({ name }) => (
+const Category = ({ name, color }) => (
   <Grid container direction="row" justify="flex-start" alignItems="center">
     <Icon name={name} />
-    <CategoryName name={name} />
+    <CategoryName name={name} color={color} />{' '}
   </Grid>
 );
 
@@ -84,46 +91,61 @@ const GroupedList = ({ header, costMap }) => {
     <Container>
       <Box p={1}>
         <Header text={header} subHeader={total} />
-        {Object.entries(costMap).map(([key, value]) => {
-          const percentage = (value / total) * 100;
-          return (
-            <Box p={1} my={2}>
-              <Grid
-                container
-                direction="row"
-                justify="space-between"
-                alignItems="center"
-                key={key}
-              >
-                <Grid item xs={9} className={classes.costName}>
-                  <Category name={key} />
-                </Grid>
+        {Object.entries(costMap)
+          .sort(sortCategoryByCost)
+          .map(([category, value]) => {
+            const percentage = (value / total) * 100;
+            return (
+              <Box p={1} my={2}>
                 <Grid
                   container
                   direction="row"
                   justify="space-between"
-                  alignItems="flex-end"
-                  item
-                  xs={3}
+                  alignItems="center"
+                  key={category}
                 >
-                  <Typography display="inline" color="textSecondary">
-                    {`${percentage.toFixed(0)}%`}
-                  </Typography>
-                  <Typography display="inline" color="textPrimary">
-                    {`${value}`}
-                  </Typography>
-                </Grid>
+                  <Grid item xs={9} className={classes.costName}>
+                    <Category
+                      name={category}
+                      color={category === 'extraCost' ? 'error' : undefined}
+                    />
+                  </Grid>
+                  <Grid
+                    container
+                    direction="row"
+                    justify="space-between"
+                    alignItems="flex-end"
+                    item
+                    xs={3}
+                  >
+                    <Typography display="inline" color="textSecondary">
+                      {`${percentage.toFixed(0)}%`}
+                    </Typography>
+                    <Typography display="inline" color="textPrimary">
+                      {`${value}`}
+                    </Typography>
+                  </Grid>
 
-                <Grid item xs={12}>
-                  <Box mt={1}>
-                    <LinearProgress variant="determinate" value={percentage} />
-                  </Box>
+                  <Grid item xs={12}>
+                    <Box mt={1}>
+                      <LinearProgress
+                        variant="determinate"
+                        value={percentage}
+                        color={
+                          category === 'extraCost' ? 'secondary' : undefined
+                        }
+                      />
+                    </Box>
+                  </Grid>
                 </Grid>
-              </Grid>
-            </Box>
-          );
-        })}
+              </Box>
+            );
+          })}
       </Box>
     </Container>
   );
 };
+
+function sortCategoryByCost(a, b) {
+  return b[1] - a[1];
+}
