@@ -1,10 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.css";
-import { Overview } from "./feature/Overview";
-import { PurchasePlan } from "./feature/PurchasePlan";
-import { BottomNav } from "./layout/BottomNav";
-import { Container } from "@material-ui/core";
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import './App.css';
+import { Overview } from './feature/Overview';
+import { PurchasePlan } from './feature/PurchasePlan';
+import { BottomNav } from './layout/BottomNav';
+import { Container } from '@material-ui/core';
 
 function App() {
   return (

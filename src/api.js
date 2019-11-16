@@ -1,18 +1,24 @@
-import { seriesData } from "./mock/seriesData";
+import { seriesData } from './mock/seriesData';
+import { oneMonthOverviewData, threeMonthOverviewData, oneYearOverviewData } from './mock/overviewData';
 
 export const getOverview = async ({ groupBy }) => {
-  return {
-    balance: 0,
-    goal: 2000
-  };
+  switch (groupBy) {
+    case '1month':
+      return oneMonthOverviewData;
+    case '3month':
+      return threeMonthOverviewData;
+    case '1year':
+      return oneYearOverviewData;
+
+    default:
+      return oneMonthOverviewData;
+  }
 };
 export const getSeries = async ({ groupBy }) => {
   switch (groupBy) {
-    case "3month":
-      return seriesData.filter(
-        ({ month }) => getQuarter(month) === getQuarter(new Date())
-      );
-    case "1year":
+    case '3month':
+      return seriesData.filter(({ month }) => getQuarter(month) === getQuarter(new Date()));
+    case '1year':
       return seriesData;
     default:
       const currentMonth = new Date().getMonth();
