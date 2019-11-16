@@ -14,10 +14,11 @@ export const getOverview = async ({ groupBy }) => {
       return oneMonthOverviewData;
   }
 };
+
 export const getSeries = async ({ groupBy }) => {
   switch (groupBy) {
     case '3month':
-      return seriesData.filter(({ month }) => getQuarter(month) === getQuarter(new Date()));
+      return seriesData.filter(({ month }) => getQuarterFromMonth(month) === getQuarter(new Date()));
     case '1year':
       return seriesData;
     default:
@@ -29,5 +30,10 @@ export const getSeries = async ({ groupBy }) => {
 function getQuarter(d) {
   d = d || new Date();
   var m = Math.floor(d.getMonth() / 3) + 2;
+  return m > 4 ? m - 4 : m;
+}
+
+function getQuarterFromMonth(month) {
+  var m = Math.floor(month / 3) + 2;
   return m > 4 ? m - 4 : m;
 }
