@@ -82,7 +82,8 @@ export const SavingGoal = ({ goal, series }) => {
   return (
     <>
       <div style={{ padding: 10 }}>
-        <CircularProgressbar strokeWidth={15} value={progress} text={`${progress.toFixed(0)}%`} />
+        <CircularProgressbar strokeWidth={15} value={progress} text={`${balance}€`} />
+        <div>{`Goal: ${goal}€`}</div>
       </div>
       <Chart options={option} series={data} type="bar" height="350" />
     </>

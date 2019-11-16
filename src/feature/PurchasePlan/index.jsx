@@ -1,14 +1,6 @@
 import React, { useState, Fragment } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
-import {
-  Card,
-  Box,
-  Dialog,
-  DialogTitle,
-  DialogContent,
-  DialogActions,
-  Slide
-} from '@material-ui/core';
+import { Card, Box, Dialog, DialogTitle, DialogContent, DialogActions, Slide } from '@material-ui/core';
 import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
@@ -19,12 +11,12 @@ import FormLabel from '@material-ui/core/FormLabel';
 
 import { purchasePredict } from './purchase_predict';
 import { CostList } from '../Overview/CostList';
-import { OverviewDumb } from '../Overview';
+import { ProjectedSavingGoal } from './ProjectedSavingGoal';
 
 const categories = [
   { label: 'House', value: 'house' },
   { label: 'Vehicle', value: 'vehicle' },
-  { label: 'Pet', value: 'pet' }
+  { label: 'Pet', value: 'pet' },
 ];
 
 const BootstrapInput = withStyles(theme => ({
@@ -64,21 +56,21 @@ const BootstrapInput = withStyles(theme => ({
 
 const useStyles = makeStyles(theme => ({
   margin: {
-    marginTop: "10px",
-    marginBottom: "10px",
+    marginTop: '10px',
+    marginBottom: '10px',
   },
   formLabel: {
-    textAlign:"center",
-    color: "#3e98c7"
+    textAlign: 'center',
+    color: '#3e98c7',
   },
   formControl: {
-    marginTop: "15px",
-    marginBottom: "10px"
+    marginTop: '15px',
+    marginBottom: '10px',
   },
   formRow: {
     // margin: theme.spacing(1),
   },
-  fab: {}
+  fab: {},
 }));
 
 export function PurchasePlan() {
@@ -91,9 +83,9 @@ export function PurchasePlan() {
     carwash: 10,
     garage: 10,
     fuel: 150,
-  })
+  });
   const [variableCost, setVariableCost] = useState({
-    down_payment: 0
+    down_payment: 0,
   });
   const [isOpen, setIsOpen] = React.useState(false);
   const [plan, setPlan] = React.useState(null);
@@ -108,7 +100,7 @@ export function PurchasePlan() {
     setFixCost(prev => {
       return {
         ...prev,
-        [name]: value
+        [name]: value,
       };
     });
   };
@@ -117,7 +109,7 @@ export function PurchasePlan() {
     setVariableCost(prev => {
       return {
         ...prev,
-        [name]: value
+        [name]: value,
       };
     });
   };
@@ -139,18 +131,28 @@ export function PurchasePlan() {
             onChange={handleChange}
             input={<BootstrapInput />}
           >
-            {categories.map(({ value, label }) => <option value={value} key={value} >{label}</option>)}
-            <option value="other" >Other</option>
+            {categories.map(({ value, label }) => (
+              <option value={value} key={value}>
+                {label}
+              </option>
+            ))}
+            <option value="other">Other</option>
           </NativeSelect>
         </FormControl>
         <FormControl className={classes.formControl}>
           <InputLabel htmlFor="demo-customized-textbox">Duration (month)</InputLabel>
-          <BootstrapInput id="demo-customized-textbox" value={timeAmount} onChange={(event) => setTimeAmount(event.target.value)} />
+          <BootstrapInput
+            id="demo-customized-textbox"
+            value={timeAmount}
+            onChange={event => setTimeAmount(event.target.value)}
+          />
         </FormControl>
-        {category === 'vehicle' &&
-          (<Fragment>
+        {category === 'vehicle' && (
+          <Fragment>
             <FormControl fullWidth component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend" className={classes.formLabel} >Purchase Cost</FormLabel>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Purchase Cost
+              </FormLabel>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="down_payment">Down payment</InputLabel>
                 <Input name="down_payment" onChange={handleVariableCostInputChange} />
@@ -162,46 +164,49 @@ export function PurchasePlan() {
             </FormControl>
 
             <FormControl fullWidth component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend" className={classes.formLabel}>Car Usage Cost</FormLabel>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Car Usage Cost
+              </FormLabel>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="maintenance">Maintenance and repair</InputLabel>
-                <Input defaultValue='100' name="maintenance" onChange={handleFixCostInputChange} />
+                <Input defaultValue="100" name="maintenance" onChange={handleFixCostInputChange} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="insurance">Insurance</InputLabel>
-                <Input defaultValue='60' name="insurance" onChange={handleFixCostInputChange} />
+                <Input defaultValue="60" name="insurance" onChange={handleFixCostInputChange} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="taxes">Registration and taxes</InputLabel>
-                <Input defaultValue='75' name="taxes" onChange={handleFixCostInputChange} />
+                <Input defaultValue="75" name="taxes" onChange={handleFixCostInputChange} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="carwash">Car wash</InputLabel>
-                <Input defaultValue='10' name="carwash" onChange={handleFixCostInputChange} />
+                <Input defaultValue="10" name="carwash" onChange={handleFixCostInputChange} />
               </FormControl>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="garage">Garage expense</InputLabel>
-                <Input defaultValue='10' name="garage" onChange={handleFixCostInputChange} />
+                <Input defaultValue="10" name="garage" onChange={handleFixCostInputChange} />
               </FormControl>
             </FormControl>
             <FormControl fullWidth component="fieldset" className={classes.formControl}>
-              <FormLabel component="legend" className={classes.formLabel}>Fuel Costs</FormLabel>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Fuel Costs
+              </FormLabel>
               <FormControl className={classes.margin}>
                 <InputLabel htmlFor="fuel">Fuel Costs</InputLabel>
-                <Input defaultValue='150' name="fuel" onChange={handleFixCostInputChange} />
+                <Input defaultValue="150" name="fuel" onChange={handleFixCostInputChange} />
               </FormControl>
             </FormControl>
 
             <FormControl>
               <Button variant="outlined" color="primary" className={classes.margin} onClick={submitPlan}>
                 Submit
-        </Button>
-
+              </Button>
             </FormControl>
-          </Fragment>)
-        }
-
+          </Fragment>
+        )}
       </Box>
+      <CostPredictionModal open={isOpen} onClose={() => setIsOpen(false)} series={plan} />
     </div>
   );
 }
@@ -220,12 +225,12 @@ const CostPredictionModal = ({ series, open, onClose }) => {
       aria-labelledby="alert-dialog-slide-title"
       aria-describedby="alert-dialog-slide-description"
     >
-      <DialogTitle id="alert-dialog-slide-title">
-        Projection for next 12 months
-      </DialogTitle>
+      <DialogTitle id="alert-dialog-slide-title">Projection for next 12 months</DialogTitle>
       <DialogContent>
         {!!series && (
-          <OverviewDumb series={series} overview={{ goal: 12000 }} />
+          <>
+            <ProjectedSavingGoal goal={12000} series={series} /> <CostList series={series} />
+          </>
         )}
       </DialogContent>
       <DialogActions>
