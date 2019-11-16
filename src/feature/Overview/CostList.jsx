@@ -4,28 +4,30 @@ import {
   ListSubheader,
   ListItem,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Card
 } from '@material-ui/core';
 
 export const CostList = ({ series }) => {
   const { fixCost, variableCost } = aggregateTotalCost(series);
   return (
-    <List subheader={<ListSubheader>Settings</ListSubheader>}>
-      {Object.entries(fixCost).map(([key, value]) => (
-        <ListItem key={key}>
-          <ListItemText id={key} primary={key} />
-          <ListItemIcon>{value}</ListItemIcon>
-        </ListItem>
-      ))}
-      {Object.entries(variableCost).map(([key, value]) => (
-        <ListItem key={key}>
-          <ListItemText id={key} primary={key} />
-          <ListItemIcon>{value}</ListItemIcon>
-        </ListItem>
-      ))}
-    </List>
+    <Card>
+      <GroupedList header="Fix Cost" costMap={fixCost} />
+      <GroupedList header="Variable Cost" costMap={variableCost} />
+    </Card>
   );
 };
+
+const GroupedList = ({ header, costMap }) => (
+  <List subheader={<ListSubheader>{header}</ListSubheader>}>
+    {Object.entries(costMap).map(([key, value]) => (
+      <ListItem key={key}>
+        <ListItemText id={key} primary={key} />
+        <ListItemIcon>{value}</ListItemIcon>
+      </ListItem>
+    ))}
+  </List>
+);
 
 function aggregateTotalCost(series) {
   return series.reduce(
