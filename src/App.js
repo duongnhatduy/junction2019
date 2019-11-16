@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import logo from "./logo.svg";
 import "./App.css";
-import Button from "@material-ui/core/Button";
 import { Overview } from "./feature/Overview";
 import { PurchasePlan } from "./feature/PurchasePlan";
+import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import HomeIcon from "@material-ui/icons/Home";
+import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 
 function App() {
+  const [nav, setNav] = useState("");
   return (
     <Router>
       <div className="App">
@@ -34,6 +36,17 @@ function App() {
           </Switch>
         </div>
       </div>
+      <BottomNavigation
+        value={nav}
+        onChange={(event, newValue) => {
+          setNav(newValue);
+        }}
+        showLabels
+        // className={classes.root}
+      >
+        <BottomNavigationAction label="Home" icon={<HomeIcon />} />
+        <BottomNavigationAction label="Plan" icon={<LocalAtmIcon />} />
+      </BottomNavigation>
     </Router>
   );
 }
