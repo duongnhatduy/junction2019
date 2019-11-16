@@ -20,3 +20,8 @@ export function aggregateTotalCost(series) {
     { fixCost: {}, variableCost: {} }
   );
 }
+
+export const sum = arr =>
+  arr.reduce((acumm, current) => {
+    return (acumm += current);
+  }, 0);
