@@ -7,7 +7,7 @@ import { Layout } from './layout/Layout';
 
 function App() {
   return (
-    <Router>
+    <Router basename="/junction2019">
       <Layout>
         <Switch>
           <Route path="/" exact>
