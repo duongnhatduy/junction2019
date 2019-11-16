@@ -42,21 +42,13 @@ const ICON_MAP = {
   utilities: <WbIncandescentOutlinedIcon />
 };
 
-export const CostList = ({ series, totalExpense }) => {
+export const CostList = ({ series }) => {
   const { fixCost, variableCost } = aggregateTotalCost(series);
 
   return (
     <Card>
-      <GroupedList
-        header="Fix Cost"
-        costMap={fixCost}
-        totalExpense={totalExpense}
-      />
-      <GroupedList
-        header="Variable Cost"
-        costMap={variableCost}
-        totalExpense={totalExpense}
-      />
+      <GroupedList header="Fix Cost" costMap={fixCost} />
+      <GroupedList header="Variable Cost" costMap={variableCost} />
     </Card>
   );
 };
@@ -70,16 +62,29 @@ const Category = ({ name }) => (
   </Grid>
 );
 
-const GroupedList = ({ header, costMap, totalExpense }) => {
+const Header = ({ text, subHeader }) => (
+  <Grid container direction="row" justify="space-between" alignItems="center">
+    <Typography variant="h5" component="h5">
+      {text}
+    </Typography>
+    <Typography variant="h6" component="h6">
+      {subHeader}
+    </Typography>
+  </Grid>
+);
+
+const GroupedList = ({ header, costMap }) => {
   const classes = useStyles();
+  const total = Object.values(costMap).reduce(
+    (acc, value) => (acc += value),
+    0
+  );
   return (
     <Container>
       <Box p={1}>
-        <Typography variant="h5" component="h5">
-          {header}
-        </Typography>
+        <Header text={header} subHeader={total} />
         {Object.entries(costMap).map(([key, value]) => {
-          const percentage = (value / totalExpense) * 100;
+          const percentage = (value / total) * 100;
           return (
             <Box p={1} my={2}>
               <Grid
