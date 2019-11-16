@@ -35,7 +35,7 @@ export const Overview = () => {
       {!!series && !!overview ? (
         <>
           <SavingGoal {...overview} series={series} />{' '}
-          <CostList series={series} totalExpense={overview.expense} />
+          <CostList series={series} />
         </>
       ) : (
         <div>loading...</div>
