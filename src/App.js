@@ -1,17 +1,16 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import "./App.css";
-import { Overview } from "./feature/Overview";
-import { PurchasePlan } from "./feature/PurchasePlan";
-import { BottomNav } from "./layout/BottomNav";
-import { Container } from "@material-ui/core";
+import React from 'react';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import './App.css';
+import { Overview } from './feature/Overview';
+import { PurchasePlan } from './feature/PurchasePlan';
+import { BottomNav } from './layout/BottomNav';
+import { AppBar } from '@material-ui/core';
+import { Layout } from './layout/Layout';
 
 function App() {
   return (
     <Router>
-      <Container>
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
+      <Layout>
         <Switch>
           <Route path="/" exact>
             <Overview />
@@ -20,8 +19,7 @@ function App() {
             <PurchasePlan />
           </Route>
         </Switch>
-      </Container>
-      <BottomNav />
+      </Layout>
     </Router>
   );
 }
