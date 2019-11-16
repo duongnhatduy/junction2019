@@ -1,48 +1,52 @@
 import React, { useState } from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import { makeStyles } from "@material-ui/core/styles";
 import "./App.css";
 import { Overview } from "./feature/Overview";
 import { PurchasePlan } from "./feature/PurchasePlan";
-import { BottomNavigation, BottomNavigationAction } from "@material-ui/core";
+import {
+  Container,
+  BottomNavigation,
+  BottomNavigationAction
+} from "@material-ui/core";
 import HomeIcon from "@material-ui/icons/Home";
 import LocalAtmIcon from "@material-ui/icons/LocalAtm";
 
+const useStyles = makeStyles({
+  root: {
+    width: 500
+  },
+  stickToBottom: {
+    width: "100%",
+    position: "fixed",
+    bottom: 0
+  }
+});
+
 function App() {
+  const classes = useStyles();
   const [nav, setNav] = useState("");
   return (
     <Router>
-      <div className="App">
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to="/">Home</Link>
-              </li>
-              <li>
-                <Link to="/plan">Purchase Plan</Link>
-              </li>
-            </ul>
-          </nav>
-
-          {/* A <Switch> looks through its children <Route>s and
+      <Container fixed>
+        {/* A <Switch> looks through its children <Route>s and
             renders the first one that matches the current URL. */}
-          <Switch>
-            <Route path="/" exact>
-              <Overview />
-            </Route>
-            <Route path="/plan" exact>
-              <PurchasePlan />
-            </Route>
-          </Switch>
-        </div>
-      </div>
+        <Switch>
+          <Route path="/" exact>
+            <Overview />
+          </Route>
+          <Route path="/plan" exact>
+            <PurchasePlan />
+          </Route>
+        </Switch>
+      </Container>
       <BottomNavigation
         value={nav}
         onChange={(event, newValue) => {
           setNav(newValue);
         }}
         showLabels
-        // className={classes.root}
+        className={classes.stickToBottom}
       >
         <BottomNavigationAction label="Home" icon={<HomeIcon />} />
         <BottomNavigationAction label="Plan" icon={<LocalAtmIcon />} />
