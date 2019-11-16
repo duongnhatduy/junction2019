@@ -42,12 +42,12 @@ export function PurchasePlan() {
   const classes = useStyles();
   const [fixCost, setFixCost] = useState({
     installment: 0,
-    maintenance: 0,
-    insurance: 0,
-    taxes: 0,
-    carwash: 0,
-    garage: 0,
-    fuel: 0,
+    maintenance: 100,
+    insurance: 60,
+    taxes: 75,
+    carwash: 10,
+    garage: 10,
+    fuel: 150,
   })
   const [variableCost, setVariableCost] = useState({
     down_payment: 0,
@@ -78,7 +78,7 @@ export function PurchasePlan() {
     })
   };
   const submitPlan = () => {
-    const newPlan = purchasePredict('CAR', fixCost, variableCost)
+    const newPlan = purchasePredict(fixCost, variableCost)
     console.log(newPlan, 'newPlan')
   }
 
