@@ -28,9 +28,9 @@ export const Overview = () => {
         value={groupBy}
         onChange={({ target: { value } }) => setGroupBy(value)}
       >
-        <MenuItem value="1month">1 Month</MenuItem>
-        <MenuItem value="3month">3 Months</MenuItem>
-        <MenuItem value="1year">1 Year</MenuItem>
+        <MenuItem value="1month">This Month</MenuItem>
+        <MenuItem value="3month">This Quarter</MenuItem>
+        <MenuItem value="1year">This Year</MenuItem>
       </Select>
       {!!series && !!overview ? (
         <OverviewDumb overview={overview} series={series} />
