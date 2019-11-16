@@ -1,30 +1,15 @@
 import { seriesData } from '../../mock/seriesData'
+import { sum } from '../../utils';
 
 const currentMonthIndex = 4
-const CAR = 'CAR'
-const HOUSE = 'HOUSE'
 
-const carExtraCost = {
-    fixCost: 200,
-    variableCost: 50,
-}
-
-const houseExtraCost = {
-    fixCost: 200,
-    variableCost: 100,
-}
-
-const petExtraCost = {
-    fixCost: 50,
-    variableCost: 25,
-}
-
-export const purchasePredict = (item, amount, length) => {
-    const itemExtraCost = item === CAR ? carExtraCost : item === HOUSE ? houseExtraCost : petExtraCost
+export const purchasePredict = (item, fixCost, variableCost) => {
     seriesData.map((seri, i) => {
+        if (i === currentMonthIndex + 1) {
+            seri.variableCost.extraCost = variableCost.down_payment
+        }
         if (i > currentMonthIndex) {
-            seri.fixCost.extraCost = itemExtraCost.fixCost + amount/length
-            seri.variableCost.extraCost = itemExtraCost.variableCost
+            seri.fixCost.extraCost = sum(Object.values(fixCost))
         }
         return seri
     })

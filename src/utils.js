@@ -23,5 +23,5 @@ export function aggregateTotalCost(series) {
 
 export const sum = arr =>
   arr.reduce((acumm, current) => {
-    return (acumm += current);
+    return (acumm += parseInt(current));
   }, 0);

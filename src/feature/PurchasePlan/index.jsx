@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
+import { Card, Box } from '@material-ui/core'
+import Input from "@material-ui/core/Input";
 import InputLabel from '@material-ui/core/InputLabel';
 import FormControl from '@material-ui/core/FormControl';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import InputBase from '@material-ui/core/InputBase';
 import Button from '@material-ui/core/Button';
+import FormLabel from '@material-ui/core/FormLabel';
+
+import { purchasePredict } from './purchase_predict'
 
 const categories = [{ label: "House", value: "house" }, { label: "Vehicle", value: "vehicle" }, { label: "Pet", value: "pet" }]
 
@@ -15,37 +20,18 @@ const BootstrapInput = withStyles(theme => ({
     },
   },
   input: {
-    borderRadius: 4,
-    position: 'relative',
-    backgroundColor: theme.palette.background.paper,
-    border: '1px solid #ced4da',
-    fontSize: 16,
-    padding: '10px 26px 10px 12px',
-    transition: theme.transitions.create(['border-color', 'box-shadow']),
-    // Use the system font instead of the default Roboto font.
-    fontFamily: [
-      '-apple-system',
-      'BlinkMacSystemFont',
-      '"Segoe UI"',
-      'Roboto',
-      '"Helvetica Neue"',
-      'Arial',
-      'sans-serif',
-      '"Apple Color Emoji"',
-      '"Segoe UI Emoji"',
-      '"Segoe UI Symbol"',
-    ].join(','),
-    '&:focus': {
-      borderRadius: 4,
-      borderColor: '#80bdff',
-      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
-    },
   },
 }))(InputBase);
 
 const useStyles = makeStyles(theme => ({
   margin: {
-    margin: theme.spacing(1),
+    // margin: theme.spacing(1),
+  },
+  formControl: {
+    // margin: theme.spacing(3),
+  },
+  formRow: {
+    // margin: theme.spacing(1),
   },
   fab: {
 
@@ -54,50 +40,118 @@ const useStyles = makeStyles(theme => ({
 
 export function PurchasePlan() {
   const classes = useStyles();
-  const [category, setCategory] = React.useState('');
-  const [timeAmount, setTimeAmount] = React.useState(1);
-  const [purchaseValue, setPurchaseValue] = React.useState(0)
+  const [fixCost, setFixCost] = useState({
+    installment: 0,
+    maintenance: 0,
+    insurance: 0,
+    taxes: 0,
+    carwash: 0,
+    garage: 0,
+    fuel: 0,
+  })
+  const [variableCost, setVariableCost] = useState({
+    down_payment: 0,
+
+  })
+  const [category, setCategory] = useState('');
+  const [timeAmount, setTimeAmount] = useState(1);
+  const [purchaseValue, setPurchaseValue] = useState(0)
   const handleChange = event => {
     setCategory(event.target.value);
   };
+  const handleFixCostInputChange = event => {
+    const { name, value } = event.target
+    setFixCost(prev => {
+      return {
+        ...prev,
+        [name]: value
+      }
+    })
+  };
+  const handleVariableCostInputChange = event => {
+    const { name, value } = event.target
+    setVariableCost(prev => {
+      return {
+        ...prev,
+        [name]: value
+      }
+    })
+  };
+  const submitPlan = () => {
+    const newPlan = purchasePredict('CAR', fixCost, variableCost)
+    console.log(newPlan, 'newPlan')
+  }
+
   return (
-    <div>
-      <FormControl className={classes.margin}>
-        <InputLabel htmlFor="demo-customized-select-native">Category</InputLabel>
-        <NativeSelect
-          id="demo-customized-select-native"
-          value={category}
-          onChange={handleChange}
-          input={<BootstrapInput />}
-        >
-          {categories.map(({ value, label }) => <option value={value} key={value} >{label}</option>)}
-          <option value="other" >Other</option>
-        </NativeSelect>
-      </FormControl>
-      <FormControl className={classes.margin}>
-        <InputLabel htmlFor="demo-customized-textbox">Monthly payment</InputLabel>
-        <BootstrapInput
-          id="outlined-name"
-          label="Name"
-          className={classes.textField}
-          value={purchaseValue}
-          onChange={(event) => setPurchaseValue(event.target.value)}
-        />
-      </FormControl>
-      <FormControl className={classes.margin}>
-        <InputLabel htmlFor="demo-customized-textbox">Duration (month)</InputLabel>
-        <BootstrapInput id="demo-customized-textbox" value={timeAmount} onChange={(event) => setTimeAmount(event.target.value)} />
-      </FormControl>
-      <div>
+    <Card>
+      <Box p={1}>
+        {/* <FormControl className={classes.margin}>
+          <InputLabel htmlFor="demo-customized-select-native">Category</InputLabel>
+          <NativeSelect
+            id="demo-customized-select-native"
+            value={category}
+            onChange={handleChange}
+            input={<BootstrapInput />}
+          >
+            {categories.map(({ value, label }) => <option value={value} key={value} >{label}</option>)}
+            <option value="other" >Other</option>
+          </NativeSelect>
+        </FormControl>
+        <FormControl className={classes.margin}>
+          <InputLabel htmlFor="demo-customized-textbox">Duration (month)</InputLabel>
+          <BootstrapInput id="demo-customized-textbox" value={timeAmount} onChange={(event) => setTimeAmount(event.target.value)} />
+        </FormControl> */}
+        <FormControl fullWidth component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">Purchase Cost</FormLabel>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="down_payment">Down payment</InputLabel>
+            <Input name="down_payment" onChange={handleVariableCostInputChange} />
+          </FormControl>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="installment">Installment</InputLabel>
+            <Input name="installment" onChange={handleFixCostInputChange} />
+          </FormControl>
+        </FormControl>
+
+        <FormControl fullWidth component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">Car Usage Cost</FormLabel>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="maintenance">Maintenance and repair</InputLabel>
+            <Input defaultValue='100' name="maintenance" onChange={handleFixCostInputChange} />
+          </FormControl>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="insurance">Insurance</InputLabel>
+            <Input defaultValue='60' name="insurance" onChange={handleFixCostInputChange} />
+          </FormControl>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="taxes">Registration and taxes</InputLabel>
+            <Input defaultValue='75' name="taxes" onChange={handleFixCostInputChange} />
+          </FormControl>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="carwash">Car wash</InputLabel>
+            <Input defaultValue='10' name="carwash" onChange={handleFixCostInputChange} />
+          </FormControl>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="garage">Garage expense</InputLabel>
+            <Input defaultValue='10' name="garage" onChange={handleFixCostInputChange} />
+          </FormControl>
+        </FormControl>
+        <FormControl fullWidth component="fieldset" className={classes.formControl}>
+          <FormLabel component="legend">Fuel Costs</FormLabel>
+          <FormControl className={classes.formRow}>
+            <InputLabel htmlFor="fuel">Fuel Costs</InputLabel>
+            <Input defaultValue='150' name="fuel" onChange={handleFixCostInputChange} />
+          </FormControl>
+        </FormControl>
+
         <FormControl>
-          <Button variant="outlined" color="primary" className={classes.margin}>
+          <Button variant="outlined" color="primary" className={classes.margin} onClick={submitPlan}>
             Submit
-      </Button>
+        </Button>
 
         </FormControl>
 
-      </div>
-
-    </div>
+      </Box>
+    </Card>
   );
 }
