@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import { makeStyles, withStyles } from '@material-ui/core/styles';
 import {
   Card,
@@ -30,18 +30,50 @@ const categories = [
 const BootstrapInput = withStyles(theme => ({
   root: {
     'label + &': {
-      marginTop: theme.spacing(3)
-    }
+      marginTop: theme.spacing(3),
+    },
   },
-  input: {}
+  input: {
+    borderRadius: 4,
+    position: 'relative',
+    backgroundColor: theme.palette.background.paper,
+    border: '1px solid #ced4da',
+    fontSize: 16,
+    padding: '10px 26px 10px 12px',
+    transition: theme.transitions.create(['border-color', 'box-shadow']),
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      '-apple-system',
+      'BlinkMacSystemFont',
+      '"Segoe UI"',
+      'Roboto',
+      '"Helvetica Neue"',
+      'Arial',
+      'sans-serif',
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(','),
+    '&:focus': {
+      borderRadius: 4,
+      borderColor: '#80bdff',
+      boxShadow: '0 0 0 0.2rem rgba(0,123,255,.25)',
+    },
+  },
 }))(InputBase);
 
 const useStyles = makeStyles(theme => ({
   margin: {
-    // margin: theme.spacing(1),
+    marginTop: "10px",
+    marginBottom: "10px",
+  },
+  formLabel: {
+    textAlign:"center",
+    color: "#3e98c7"
   },
   formControl: {
-    // margin: theme.spacing(3),
+    marginTop: "15px",
+    marginBottom: "10px"
   },
   formRow: {
     // margin: theme.spacing(1),
@@ -68,7 +100,6 @@ export function PurchasePlan() {
 
   const [category, setCategory] = useState('');
   const [timeAmount, setTimeAmount] = useState(1);
-  const [purchaseValue, setPurchaseValue] = useState(0);
   const handleChange = event => {
     setCategory(event.target.value);
   };
@@ -98,9 +129,9 @@ export function PurchasePlan() {
   };
 
   return (
-    <Card>
+    <div>
       <Box p={1}>
-        {/* <FormControl className={classes.margin}>
+        <FormControl className={classes.formControl}>
           <InputLabel htmlFor="demo-customized-select-native">Category</InputLabel>
           <NativeSelect
             id="demo-customized-select-native"
@@ -112,112 +143,66 @@ export function PurchasePlan() {
             <option value="other" >Other</option>
           </NativeSelect>
         </FormControl>
-        <FormControl className={classes.margin}>
+        <FormControl className={classes.formControl}>
           <InputLabel htmlFor="demo-customized-textbox">Duration (month)</InputLabel>
           <BootstrapInput id="demo-customized-textbox" value={timeAmount} onChange={(event) => setTimeAmount(event.target.value)} />
-        </FormControl> */}
-        <FormControl
-          fullWidth
-          component="fieldset"
-          className={classes.formControl}
-        >
-          <FormLabel component="legend">Purchase Cost</FormLabel>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="down_payment">Down payment</InputLabel>
-            <Input
-              name="down_payment"
-              onChange={handleVariableCostInputChange}
-            />
-          </FormControl>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="installment">Installment</InputLabel>
-            <Input name="installment" onChange={handleFixCostInputChange} />
-          </FormControl>
         </FormControl>
+        {category === 'vehicle' &&
+          (<Fragment>
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel} >Purchase Cost</FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="down_payment">Down payment</InputLabel>
+                <Input name="down_payment" onChange={handleVariableCostInputChange} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="installment">Installment</InputLabel>
+                <Input name="installment" onChange={handleFixCostInputChange} />
+              </FormControl>
+            </FormControl>
 
-        <FormControl
-          fullWidth
-          component="fieldset"
-          className={classes.formControl}
-        >
-          <FormLabel component="legend">Car Usage Cost</FormLabel>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="maintenance">
-              Maintenance and repair
-            </InputLabel>
-            <Input
-              defaultValue="100"
-              name="maintenance"
-              onChange={handleFixCostInputChange}
-            />
-          </FormControl>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="insurance">Insurance</InputLabel>
-            <Input
-              defaultValue="60"
-              name="insurance"
-              onChange={handleFixCostInputChange}
-            />
-          </FormControl>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="taxes">Registration and taxes</InputLabel>
-            <Input
-              defaultValue="75"
-              name="taxes"
-              onChange={handleFixCostInputChange}
-            />
-          </FormControl>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="carwash">Car wash</InputLabel>
-            <Input
-              defaultValue="10"
-              name="carwash"
-              onChange={handleFixCostInputChange}
-            />
-          </FormControl>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="garage">Garage expense</InputLabel>
-            <Input
-              defaultValue="10"
-              name="garage"
-              onChange={handleFixCostInputChange}
-            />
-          </FormControl>
-        </FormControl>
-        <FormControl
-          fullWidth
-          component="fieldset"
-          className={classes.formControl}
-        >
-          <FormLabel component="legend">Fuel Costs</FormLabel>
-          <FormControl className={classes.formRow}>
-            <InputLabel htmlFor="fuel">Fuel Costs</InputLabel>
-            <Input
-              defaultValue="150"
-              name="fuel"
-              onChange={handleFixCostInputChange}
-            />
-          </FormControl>
-        </FormControl>
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel}>Car Usage Cost</FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="maintenance">Maintenance and repair</InputLabel>
+                <Input defaultValue='100' name="maintenance" onChange={handleFixCostInputChange} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="insurance">Insurance</InputLabel>
+                <Input defaultValue='60' name="insurance" onChange={handleFixCostInputChange} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="taxes">Registration and taxes</InputLabel>
+                <Input defaultValue='75' name="taxes" onChange={handleFixCostInputChange} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="carwash">Car wash</InputLabel>
+                <Input defaultValue='10' name="carwash" onChange={handleFixCostInputChange} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="garage">Garage expense</InputLabel>
+                <Input defaultValue='10' name="garage" onChange={handleFixCostInputChange} />
+              </FormControl>
+            </FormControl>
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel}>Fuel Costs</FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="fuel">Fuel Costs</InputLabel>
+                <Input defaultValue='150' name="fuel" onChange={handleFixCostInputChange} />
+              </FormControl>
+            </FormControl>
 
-        <FormControl>
-          <Button
-            variant="outlined"
-            color="primary"
-            className={classes.margin}
-            onClick={submitPlan}
-          >
-            Submit
-          </Button>
-        </FormControl>
+            <FormControl>
+              <Button variant="outlined" color="primary" className={classes.margin} onClick={submitPlan}>
+                Submit
+        </Button>
+
+            </FormControl>
+          </Fragment>)
+        }
+
       </Box>
-
-      <CostPredictionModal
-        series={plan}
-        open={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
-    </Card>
+    </div>
   );
 }
 
