@@ -1,6 +1,8 @@
 import React from 'react';
 import { Box, Container, Card, Grid, Typography } from '@material-ui/core';
 
+import { aggregateTotalCost } from '../../utils';
+
 export const CostList = ({ series }) => {
   const { fixCost, variableCost } = aggregateTotalCost(series);
   return (
@@ -18,13 +20,7 @@ const GroupedList = ({ header, costMap }) => (
         {header}
       </Typography>
       {Object.entries(costMap).map(([key, value]) => (
-        <Grid
-          container
-          direction="row"
-          justify="space-between"
-          alignItems="center"
-          key={key}
-        >
+        <Grid container direction="row" justify="space-between" alignItems="center" key={key}>
           <Grid item xs={9}>
             {key}
           </Grid>
@@ -36,26 +32,3 @@ const GroupedList = ({ header, costMap }) => (
     </Box>
   </Container>
 );
-
-function aggregateTotalCost(series) {
-  return series.reduce(
-    ({ fixCost, variableCost }, month) => {
-      // each fixCost item of month
-      Object.keys(month.fixCost).map(type => {
-        if (!fixCost[type]) {
-          fixCost[type] = 0;
-        }
-        return (fixCost[type] += month.fixCost[type]);
-      });
-      Object.keys(month.variableCost).map(type => {
-        if (!variableCost[type]) {
-          variableCost[type] = 0;
-        }
-        return (variableCost[type] += month.variableCost[type]);
-      });
-
-      return { fixCost, variableCost };
-    },
-    { fixCost: {}, variableCost: {} }
-  );
-}
