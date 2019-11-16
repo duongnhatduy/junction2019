@@ -3,8 +3,6 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.css';
 import { Overview } from './feature/Overview';
 import { PurchasePlan } from './feature/PurchasePlan';
-import { BottomNav } from './layout/BottomNav';
-import { AppBar } from '@material-ui/core';
 import { Layout } from './layout/Layout';
 
 function App() {

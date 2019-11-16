@@ -1,6 +1,6 @@
 import React from 'react';
 import { BottomNav } from './BottomNav';
-import { AppBar, Paper, makeStyles } from '@material-ui/core';
+import { AppBar, Box, Paper, makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles(theme => ({
   appBar: {
@@ -17,9 +17,9 @@ export const Layout = ({ children }) => {
 
   return (
     <>
-      <Paper square className={classes.paper}>
+      <Box p={1} className={classes.paper}>
         {children}
-      </Paper>
+      </Box>
       <AppBar color="primary" className={classes.appBar}>
         <BottomNav />
       </AppBar>
