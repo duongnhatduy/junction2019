@@ -5,7 +5,7 @@ import { getOverview, getSeries } from '../../api';
 import { CostList } from './CostList';
 
 export const Overview = () => {
-  const [groupBy, setGroupBy] = useState('1month');
+  const [groupBy, setGroupBy] = useState('3month');
 
   const [overview, setOverview] = useState(null);
   const [series, setSeries] = useState(null);

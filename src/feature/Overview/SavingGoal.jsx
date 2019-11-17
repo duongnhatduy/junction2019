@@ -34,11 +34,11 @@ export const SavingGoal = ({ goal, series }) => {
     chart: {
       stacked: true,
       toolbar: {
-        show: true,
+        show: true
       },
       zoom: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     responsive: [
       {
@@ -47,45 +47,45 @@ export const SavingGoal = ({ goal, series }) => {
           legend: {
             position: 'bottom',
             offsetX: -10,
-            offsetY: -10,
-          },
-        },
-      },
+            offsetY: -10
+          }
+        }
+      }
     ],
     plotOptions: {
       bar: {
-        horizontal: false,
-      },
+        horizontal: false
+      }
     },
     xaxis: {
       type: 'category',
-      categories: months,
+      categories: months
     },
     legend: {
       position: 'right',
-      offsetY: 40,
+      offsetY: 40
     },
     fill: {
-      opacity: 1,
-    },
+      opacity: 1
+    }
   };
 
   const data = [
     {
       name: 'Expense',
-      data: expenses,
+      data: expenses
     },
     {
       name: 'Saving',
-      data: savings,
-    },
+      data: savings
+    }
   ];
 
   return (
     <>
-      <div style={{ padding: 10 }}>
-        <CircularProgressbar strokeWidth={15} value={progress} text={`${balance}€`} />
-        <div>{`Goal: ${goal}€`}</div>
+      <div style={{ margin: '0 auto', width: 300, padding: 10 }}>
+        <CircularProgressbar value={progress} text={`${balance}€`} />
+        <div>{`Saving Goal: ${goal}€`}</div>
       </div>
       <Chart options={option} series={data} type="bar" height="350" />
     </>
