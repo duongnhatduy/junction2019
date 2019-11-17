@@ -98,8 +98,8 @@ export function PurchasePlan() {
   const [isOpen, setIsOpen] = React.useState(false);
   const [plan, setPlan] = React.useState(null);
 
-  const [category, setCategory] = useState('');
-  const [timeAmount, setTimeAmount] = useState(1);
+  const [category, setCategory] = useState('vehicle');
+  const [timeAmount, setTimeAmount] = useState(12);
   const handleChange = event => {
     setCategory(event.target.value);
   };
@@ -132,7 +132,6 @@ export function PurchasePlan() {
   };
   const submitPlan = () => {
     const newPlan = purchasePredict(fixCost, variableCost);
-    console.log(newPlan, 'newPlan');
     setPlan(newPlan);
     setIsOpen(true);
   };
@@ -150,8 +149,8 @@ export function PurchasePlan() {
             onChange={handleChange}
             input={<BootstrapInput />}
           >
-            {categories.map(({ value, label }) => (
-              <option value={value} key={value}>
+            {categories.map(({ value, label }, index) => (
+              <option value={value} key={value} disalbed>
                 {label}
               </option>
             ))}
@@ -219,6 +218,115 @@ export function PurchasePlan() {
 
             <FormControl>
               <Button variant="outlined" color="primary" className={classes.margin} onClick={submitPlan}>
+                Submit
+              </Button>
+            </FormControl>
+          </Fragment>
+        )}
+        {category === 'house' && (
+          <Fragment>
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Purchase Cost
+              </FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="down_payment">Down payment</InputLabel>
+                <Input name="down_payment" />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="installment">Installment</InputLabel>
+                <Input name="installment" endAdornment={endInputPerMonth} />
+              </FormControl>
+            </FormControl>
+
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Maintenance and repair
+              </FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="maintenance">Plumbing</InputLabel>
+                <Input defaultValue="240" name="maintenance" endAdornment={endInput} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="insurance">Insurance</InputLabel>
+                <Input defaultValue="300" name="insurance" endAdornment={endInput} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="interior">Interior</InputLabel>
+                <Input defaultValue="120" name="interior" endAdornment={endInput} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="exterior">Exterior</InputLabel>
+                <Input defaultValue="60" name="exterior" endAdornment={endInput} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="service">Maintainace service</InputLabel>
+                <Input defaultValue="120" name="service" endAdornment={endInput} />
+              </FormControl>
+            </FormControl>
+
+            <FormControl>
+              <Button variant="outlined" color="primary" className={classes.margin}>
+                Submit
+              </Button>
+            </FormControl>
+          </Fragment>
+        )}
+        {category === 'pet' && (
+          <Fragment>
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Purchase Cost
+              </FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="down_payment">Payment</InputLabel>
+                <Input name="down_payment" />
+              </FormControl>
+            </FormControl>
+
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Lifetime Expense
+              </FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="food">Food</InputLabel>
+                <Input defaultValue="600" name="food" endAdornment={endInput} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="grooming">Grooming</InputLabel>
+                <Input defaultValue="200" name="grooming" endAdornment={endInput} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="medical">Medical</InputLabel>
+                <Input defaultValue="500" name="medical" endAdornment={endInput} />
+              </FormControl>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="toy">Toy</InputLabel>
+                <Input defaultValue="200" name="toy" endAdornment={endInput} />
+              </FormControl>
+            </FormControl>
+
+            <FormControl>
+              <Button variant="outlined" color="primary" className={classes.margin}>
+                Submit
+              </Button>
+            </FormControl>
+          </Fragment>
+        )}
+        {category === 'other' && (
+          <Fragment>
+            <FormControl fullWidth component="fieldset" className={classes.formControl}>
+              <FormLabel component="legend" className={classes.formLabel}>
+                Other purchase on credit
+              </FormLabel>
+              <FormControl className={classes.margin}>
+                <InputLabel htmlFor="monthly_payment">Monthly payment</InputLabel>
+                <Input name="monthly_payment" />
+              </FormControl>
+            </FormControl>
+
+            <FormControl>
+              <Button variant="outlined" color="primary" className={classes.margin}>
                 Submit
               </Button>
             </FormControl>
