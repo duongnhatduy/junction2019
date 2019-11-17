@@ -8,7 +8,9 @@ const useStyles = makeStyles(theme => ({
     bottom: 0
   },
   paper: {
-    paddingBottom: 70
+    paddingBottom: 70,
+    maxWidth: 512,
+    margin: '0 auto'
   }
 }));
 
