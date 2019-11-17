@@ -1,5 +1,9 @@
 import React from 'react';
-import { CircularProgressbar, CircularProgressbarWithChildren, buildStyles } from 'react-circular-progressbar';
+import {
+  CircularProgressbar,
+  CircularProgressbarWithChildren,
+  buildStyles
+} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
 import Chart from 'react-apexcharts';
 
@@ -45,17 +49,19 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
   const progress_withExtraCost = (balance_withExtraCost / goal) * 100;
 
   // const savings = incomes.map((income, index) => income - expenses[index]);
-  const savings_withoutExtraCost = incomes.map((income, index) => income - expenses[index] - extraCosts[index]);
+  const savings_withoutExtraCost = incomes.map(
+    (income, index) => income - expenses[index] - extraCosts[index]
+  );
 
   const option = {
     chart: {
       stacked: true,
       toolbar: {
-        show: true,
+        show: true
       },
       zoom: {
-        enabled: true,
-      },
+        enabled: true
+      }
     },
     responsive: [
       {
@@ -64,48 +70,48 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
           legend: {
             position: 'bottom',
             offsetX: -10,
-            offsetY: 0,
-          },
-        },
-      },
+            offsetY: 0
+          }
+        }
+      }
     ],
     colors: ['#008ffb', '#00e396', '#f00'],
     plotOptions: {
       bar: {
-        horizontal: false,
-      },
+        horizontal: false
+      }
     },
     xaxis: {
       type: 'category',
-      categories: months,
+      categories: months
     },
     legend: {
       position: 'right',
-      offsetY: 40,
+      offsetY: 40
     },
     fill: {
-      opacity: 1,
-    },
+      opacity: 1
+    }
   };
 
   const data = [
     {
       name: 'Expense',
-      data: expenses,
+      data: expenses
     },
     {
       name: 'Saving',
-      data: savings_withoutExtraCost,
+      data: savings_withoutExtraCost
     },
     {
       name: 'Extra cost',
-      data: extraCosts,
-    },
+      data: extraCosts
+    }
   ];
 
   return (
     <>
-      <div style={{ padding: 10 }}>
+      <div style={{ margin: '0 auto', width: 300, padding: 10 }}>
         <CircularProgressbarWithChildren
           value={progress_withoutExtraCost}
           text={`-${totalExtraCost}€`}
@@ -113,7 +119,7 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
             pathColor: '#f00',
             trailColor: '#eee',
             strokeLinecap: 'butt',
-            textColor: '#f00',
+            textColor: '#f00'
           })}
         >
           {/* Foreground path */}
@@ -121,7 +127,7 @@ export const ProjectedSavingGoal = ({ goal, series }) => {
             value={progress_withExtraCost}
             styles={buildStyles({
               trailColor: 'transparent',
-              strokeLinecap: 'butt',
+              strokeLinecap: 'butt'
             })}
           />
         </CircularProgressbarWithChildren>

@@ -9,7 +9,7 @@ const useStyles = makeStyles(theme => ({
   },
   paper: {
     paddingBottom: 70,
-    maxWidth: 512,
+    // maxWidth: 512,
     margin: '0 auto'
   }
 }));
